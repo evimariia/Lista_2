@@ -1,0 +1,84 @@
+//Fazer um programa para ler o caminho de um arquivo .csv contendo os dados de itens
+//vendidos. Cada item possui um nome, preço unitário e quantidade, separados por
+//vírgula. Você deve gerar um novo arquivo chamado "resumo.csv", localizado em uma
+//subpasta chamada "resposta" a partir da pasta original do arquivo de origem, contendo
+//apenas o nome e o valor total para aquele item (preço unitário multiplicado pela
+//quantidade), conforme exemplo.
+
+//1.  Ler o arquivo CSV e armazená-lo em uma string ou em uma lista de strings. 
+//Você pode usar a classe BufferedReader para ler o arquivo linha por linha.
+//
+//2.  Para cada linha do arquivo, usar a função .split() para dividir a linha em 3 
+//partes, com base no caractere separador do CSV (geralmente é a vírgula, mas também 
+//pode ser o ponto e vírgula, o tab, ou outro caractere).
+//
+//3.  Armazenar as 3 partes separadas em um objeto ou estrutura de dados, como uma matriz,
+//um objeto ou uma classe que represente cada linha do arquivo.
+
+package aplicacao;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+
+import entidades.Produto;
+
+public class Programa {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		List<Produto> resumo = new ArrayList<Produto>();
+		
+		
+		//Informa o caminho do arquivo
+		System.out.println("Informe o caminho de um arquivo: ");
+		String caminhoArq = sc.nextLine();
+		File caminho = new File(caminhoArq);
+		
+		//Lê o arquivo
+		try (BufferedReader br = new BufferedReader(new FileReader(caminho))) {
+			
+			String linha = br.readLine();
+			List<String> lista = new ArrayList<String>();
+			String[] partes = null;
+
+			while (linha != null) {
+				
+				if(linha != null) {
+					partes  = linha.split(","); //Cria um array de cada produto com suas informações
+					lista.add(Arrays.toString(partes)); //Adiciona o array na lista
+
+				}
+
+				linha = br.readLine();
+			}
+			
+			Produto produto = new Produto();
+			//Criar um produto para salvar as informações
+			for(String x : lista) {
+				String[] arrayDesejado = x.split(",");
+				System.out.println(Arrays.toString(arrayDesejado));
+//				produto.setNome(arrayDesejado[0]); 
+//				produto.setValor(arrayDesejado[1]);
+//				produto.setQtde(arrayDesejado[2]);
+//				System.out.println(produto.getNome()); 
+//				System.out.println(produto.getValor()); 
+//				System.out.println(produto.getQtde()); 
+
+				//produto.setNome(linha);
+			}
+			
+		} catch (IOException e) {
+			System.out.println("Erro: " + e.getMessage());
+		}	
+		
+		sc.close();
+
+	}
+
+}

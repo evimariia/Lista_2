@@ -1,0 +1,82 @@
+//Fazer um programa para ler o caminho de um arquivo .csv contendo os dados de itens
+//vendidos. Cada item possui um nome, preço unitário e quantidade, separados por
+//vírgula. Você deve gerar um novo arquivo chamado "resumo.csv", localizado em uma
+//subpasta chamada "resposta" a partir da pasta original do arquivo de origem, contendo
+//apenas o nome e o valor total para aquele item (preço unitário multiplicado pela
+//quantidade), conforme exemplo.
+
+package aplicacao;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+
+import entidades.Produto;
+
+public class Programa {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		List<Produto> resumo = new ArrayList<Produto>();
+		
+		
+		//Informa o caminho do arquivo
+		System.out.println("Informe o caminho de um arquivo: ");
+		String caminhoArq = sc.nextLine();
+		File caminho = new File(caminhoArq);
+		
+		//Lê o arquivo
+		try (BufferedReader br = new BufferedReader(new FileReader(caminho))) {
+			
+			String linha = br.readLine(); //Lê a próxima linha
+			
+			List<String> lista = new ArrayList<String>(); //Lista dos produtos
+			String[] prod = null; //Array auxiliar
+
+			while (linha != null) {				
+				if(linha != null) {
+					prod  = linha.split(","); //Cria um array de cada produto com suas informações
+					lista.add(Arrays.toString(prod)); //Adiciona o array na lista
+				}
+				linha = br.readLine(); //Lê a próxima linha
+			}
+			
+			
+			//Criar um produto para salvar as informações
+			Produto produto = new Produto(); 
+			
+			for(String x : lista) {
+				String[] arrayDesejado = x.replaceAll("\\[|\\]", "").split(",");
+				
+				//Remove espaço em branco entre os elementos do array
+				for (int i = 0; i < arrayDesejado.length; i++) {
+				    arrayDesejado[i] = arrayDesejado[i].trim();
+				}
+				
+				String nome = arrayDesejado[0];
+				String valor = arrayDesejado[1];
+				String qtde = arrayDesejado[2];
+				
+				produto.setNome(nome); 
+				produto.setValor(valor);
+				produto.setQtde(qtde);
+				Double total = produto.total();
+					
+			}
+			
+			
+		} catch (IOException e) {
+			System.out.println("Erro: " + e.getMessage());
+			//C:\Temp_TP2\produto.csv
+		}	
+		
+		sc.close();
+
+	}
+
+}

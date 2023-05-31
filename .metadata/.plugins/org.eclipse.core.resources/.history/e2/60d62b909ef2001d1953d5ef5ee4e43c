@@ -1,0 +1,13 @@
+package servicos;
+
+public class ServicoPayPal implements ServicoPgtoOnline {
+	
+	public Double taxaPgto(Double montante) {
+		return montante*(2/100);
+	}
+	
+	public Double juros(Double quantia, Integer mes) {
+		return quantia * 0.01 * mes;
+	}
+
+}

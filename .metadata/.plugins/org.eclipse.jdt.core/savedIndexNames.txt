@@ -1,0 +1,6 @@
+INDEX VERSION 1.131+C:\Users\evila\OneDrive\Documentos\LP2\Lista2\.metadata\.plugins\org.eclipse.jdt.core
+729109902.index
+1528799489.index
+1865797976.index
+3256283323.index
+3037839405.index
